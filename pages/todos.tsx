@@ -10,14 +10,6 @@ function Todos({todo}:{todo:any}) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-
-    // db.collection("posts")
-    // .orderBy("createdAt")
-    // .limit(50)
-    // .onSnapshot((snapshot) => {
-    //   setPosts(snapshot.docs.map((doc) => ({...doc.data()})))
-    // })
-    
     // データベースからデータを取得する
     const postData = collection(db, "posts");
     getDocs(postData).then((snapShot) => {

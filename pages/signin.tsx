@@ -25,14 +25,27 @@ const Home: NextPage = () => {
       </Head>
 
       <div>
-        <h1>Auth Example</h1>
+        <h1>Sign in</h1>
         {user !== null ? (
           <h2>ログイン中</h2>
         ) : (
           <h2>ログインしていない</h2>
         )}
-        <button onClick={handleLogin}>ログイン</button>
+        <button onClick={handleLogin}>Googleでログイン</button>
         <button onClick={handleLogout}>ログアウト</button>
+        <form onSubmit={handleSubmit}>
+  <div>
+    <label>名前</label>
+    <input name="name" type="text" placeholder="名前" />
+  </div>
+  <div>
+    <label>メールアドレス</label>
+    <input name="email" type="email" placeholder="メールアドレス" />
+  </div>
+  <div>
+    <button>登録</button>
+  </div>
+</form>
       </div>
     </div>
   );
