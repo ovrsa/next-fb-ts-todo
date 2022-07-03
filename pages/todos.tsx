@@ -1,52 +1,92 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
+import db from "./firebase"
+import { collection,doc,getDocs, onSnapshot } from 'firebase/firestore'
 
-// import { db } from './firebase'
-import { snapshotEqual } from 'firebase/firestore'
+// firestoreの内容を取得
+// ----------------------------------------------------------------
+function Todos({todo}:{todo:any}) {
+  const [posts, setPosts] = useState([]);
 
-export default function Todos({todo}:{todo:any}) {
-  // const [tasks, setTasks] = useState([{ id: '', title: '' }])
-  // useEffect(() => {
-  //   const unSub = db.collection('tasks').onSnapshot((snapshot) => {
-  //     setTasks(
-  //       snapshot.docs.map((doc) => ({ id: doc.id, title: doc.data().title }))
-  //     )
-  //   })
-  //   return () => unSub()
-  // }, [])
+  useEffect(() => {
 
-  return (
-    <>
-      {/* {tasks.map((task) => (
-        <h3>{task.title}</h3>
-      ))} */}
+    // db.collection("posts")
+    // .orderBy("createdAt")
+    // .limit(50)
+    // .onSnapshot((snapshot) => {
+    //   setPosts(snapshot.docs.map((doc) => ({...doc.data()})))
+    // })
+    
+    // データベースからデータを取得する
+    const postData = collection(db, "posts");
+    getDocs(postData).then((snapShot) => {
+      // console.log(snapShot.docs.map((doc) => ({...doc.data()})));
+      setPosts(snapShot.docs.map((doc) => ({...doc.data()})));
+    });
+
+    // リアルタイムで取得
+    onSnapshot(postData,(post) => {
+      setPosts(post.docs.map((doc) => ({...doc.data()})));
+    })
+  },[]);
+return <div className="App">
       <Head>
-        <title>First Post</title>
+        <title>Todo一覧</title>
       </Head>
       <h1>Todo App</h1>
+        <h2>
+          <Link href="todos/create">
+            <a>+ Add task</a>
+          </Link>
+        </h2>
+  <div>
+  {posts.map((post) => (
+    <div key={post.title}>
+      <p>{post.title}</p>
+      <p>{post.text}</p>
+    </div>
+  ))}
+  </div>
+</div>
 
-      <h2>
-        <Link href="todos/create">
-          <a>+ Add task</a>
-        </Link>
-      </h2>
-
-  <ul>
-    {todo.map((todo) => (
-      <li key={todo.id}>
-        <span>{todo.title}</span>
-          <select value={todo.status}>
-            <option value='notStarted'>未着手</option>
-            <option value='inProgress'>作業中</option>
-            <option value='done'>完了</option>
-          </select>
-        <button>編集</button>
-        <button>削除</button>
-      </li>
-    ))}
-  </ul>
-
-    </>
-  )
 }
+
+export default Todos;
+
+// export default function Todos({todo}:{todo:any}) {
+//   const [users,setUsers] = useState([]);
+
+//   useEffect(() => {
+//     // データベースからデータを取得する
+//     const userData = collection(db, "users");
+//     getDocs(userData).then((snapShot) => {
+//       // console.log(snapShot.docs.map((doc) => ({...doc.data()})));
+//       (snapShot.docs.map((doc) => ({...doc.data()})));
+//     })
+//   },[]);
+
+//   return (
+//     <>
+      // <Head>
+      //   <title>First user</title>
+      // </Head>
+      // <h1>Todo App</h1>
+
+//       <h2>
+//         <Link href="todos/create">
+//           <a>+ Add task</a>
+//         </Link>
+//       </h2>
+//       <div className = "App">
+//         {users.map((user) => (
+//           <>
+//           <div key={user.title}>
+//             <h1>{user.admin}</h1>
+//           </div>
+//           </>
+//         ))}
+//       </div>
+//     </>
+//   )
+// }

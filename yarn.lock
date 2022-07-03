@@ -1363,7 +1363,7 @@
   dependencies:
     "locate-path" "^2.0.0"
 
-"firebase@^9.8.4":
+"firebase@^9.8.4", "firebase@>= 9.0.0":
   "integrity" "sha512-fQigVEtSBprGBDLVTr485KQJ1YUWh/HeocMQvmhaUCL9dHUnW8GWfK+XkKOV2kcDB1Ur8xZPkjCxlmoTcykhgA=="
   "resolved" "https://registry.npmjs.org/firebase/-/firebase-9.8.4.tgz"
   "version" "9.8.4"
@@ -2242,6 +2242,16 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.23.0"
 
+"react-firebase-hooks@^5.0.3":
+  "integrity" "sha512-0+V2XwInZJNjW8B2cm+U21Hlv4xnp/1tJqIoDg2rjyWzKTQ9VoLPQ9PAt+fMqPumjLz5uCIREY7YqGSSjc439Q=="
+  "resolved" "https://registry.npmjs.org/react-firebase-hooks/-/react-firebase-hooks-5.0.3.tgz"
+  "version" "5.0.3"
+
+"react-hook-form@^7.33.0":
+  "integrity" "sha512-h8XoeUHQs1Snx1s/sSvM+eVTSKkWQt8TcrbL+3/Rt5gugxpy4ueL5ZZkubffyNpUyyTz0qM0kwOi2c+JgGTjLA=="
+  "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.33.0.tgz"
+  "version" "7.33.0"
+
 "react-is@^16.13.1", "react-is@^16.7.0", "react-is@^16.8.0 || ^17.0.0":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
   "resolved" "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz"
@@ -2257,7 +2267,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^16.11.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.2 || ^18.0.0-0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.13.1", "react@>=16.6.0", "react@18.2.0":
+"react@^16.11.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0", "react@^17.0.2 || ^18.0.0-0", "react@^18.2.0", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.13.1", "react@>=16.6.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

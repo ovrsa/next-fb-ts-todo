@@ -1,5 +1,7 @@
+import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
+
 
 export default function AddTodoForm({
   todo,
@@ -12,10 +14,25 @@ export default function AddTodoForm({
 }) {
   const unCreatable = todo === ''
   const [filter, setFilter] = useState('notStarted')
+  const [posts, setPosts] = useState([]);
+
 
   return (
     <>
-      {/* <form onSubmit={onAddFormSubmit}>
+      <Head>
+        <title>Todo作成</title>
+      </Head>
+      {/* <h1>Create</h1>
+
+      <div className="App">
+        <form>
+          <div> 
+            <input />
+          </div>
+        </form>
+      </div> */}
+
+      <form onSubmit={onAddFormSubmit}>
       <h2>Create</h2>
       <label htmlFor="todo"></label>
 
@@ -27,6 +44,7 @@ export default function AddTodoForm({
           value={todo}
           onChange={onAddInputChange}
           autoFocus
+          onChangeCapture={(e) => setPosts(e.target.value)}
         />
         <textarea 
         name="text"
@@ -55,7 +73,7 @@ export default function AddTodoForm({
       <Link href="./">
         <button>戻る</button>
       </Link>
-      </form> */}
+      </form>
     </>
   )
 }
