@@ -24,9 +24,10 @@ export default function Signup() {
   const router = useRouter();
   const signup = async (email: string, password: string) => {
     try {
-      setIsProcessingSignup(true);
+      // setIsProcessingSignup(true);
       await createUserWithEmailAndPassword(auth, email, password);
-      setIsProcessingSignup(false);
+      router.push("/");
+      // setIsProcessingSignup(false);
     } catch (e) {
       console.error(e);
     }
@@ -42,11 +43,7 @@ export default function Signup() {
       alert("パスワードが一致しません");
     }
   };
-
-  // useEffect(() => {
-  //   if (currentUser) router.push("/todos");
-  // }, [currentUser, router]);
-
+console.log("test")
   return (
     <>
     <form onClick={handleSubmit(onSubmit)}>
@@ -81,4 +78,3 @@ export default function Signup() {
   );
 }
 
-export {}

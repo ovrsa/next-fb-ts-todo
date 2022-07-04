@@ -7,7 +7,7 @@ import { collection,doc,getDocs, onSnapshot } from 'firebase/firestore'
 // firestoreの内容を取得
 // ----------------------------------------------------------------
 function Todos({todo}:{todo:any}) {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<any[]>([]);
 
   useEffect(() => {
     // データベースからデータを取得する

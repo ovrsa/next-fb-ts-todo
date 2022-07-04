@@ -1,5 +1,3 @@
-// https://github.com/makomori/my-login-app/tree/main/pages
-
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -18,6 +16,7 @@ const Home: NextPage = () => {
     logout().catch((error) => console.error(error));
   };
 
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -33,19 +32,6 @@ const Home: NextPage = () => {
         )}
         <button onClick={handleLogin}>Googleでログイン</button>
         <button onClick={handleLogout}>ログアウト</button>
-        <form onSubmit={handleSubmit}>
-  <div>
-    <label>名前</label>
-    <input name="name" type="text" placeholder="名前" />
-  </div>
-  <div>
-    <label>メールアドレス</label>
-    <input name="email" type="email" placeholder="メールアドレス" />
-  </div>
-  <div>
-    <button>登録</button>
-  </div>
-</form>
       </div>
     </div>
   );
