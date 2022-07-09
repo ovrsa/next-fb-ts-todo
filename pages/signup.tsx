@@ -43,13 +43,13 @@ export default function Signup() {
       alert("パスワードが一致しません");
     }
   };
-console.log("test")
+
   return (
     <>
-    <form onClick={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label>Eメール</label>
-        <input type="email" placeholder="example@test.com" 
+        <input type="email" placeholder="example@test.com"
         {...register("email",{required: true})} 
         />
         {errors.email && <p>Eメールは必須です</p>}
@@ -71,10 +71,9 @@ console.log("test")
         {errors.confirmationPassword && <p>パスワードの再入力は必須です</p>}
 
       </div>
-      <button type="submit">サインアップ</button>
+      <input type="submit" value="サインアップ" />
     </form>
     </>
 
   );
 }
-
