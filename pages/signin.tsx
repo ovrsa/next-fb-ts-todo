@@ -4,18 +4,25 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useUser, login, logout } from "../lib/auth";
 import {useAuthState} from "react-firebase-hooks/auth"
+import { useRouter } from 'next/router';
+
 
 const Home: NextPage = () => {
   const user = useUser();
-
+  
   const handleLogin = (): void => {
     login().catch((error) => console.error(error));
   };
-
+  
   const handleLogout = (): void => {
     logout().catch((error) => console.error(error));
   };
-
+  
+  const router = useRouter();
+  const handleClick = e => {
+    e.preventDefault();
+    router.push("/");
+  };
   
   return (
     <div className={styles.container}>
