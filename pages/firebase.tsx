@@ -1,9 +1,10 @@
+import firebase from 'firebase/app';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import {getAuth, onAuthStateChanged, User} from 'firebase/auth';
+// import {getAuth, onAuthStateChanged, User} from 'firebase/auth';
 import {useState} from "react";
-import "firebase/auth";
+import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
@@ -15,21 +16,17 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig)
+export const storage = getStorage();
+export const auth = getAuth();
 const db = getFirestore();
-const auth = getAuth();
-export function useAuth() {
-  return auth;
-}
-// appから変更
 export default db;
 
-export function useUser() {
-  const [user,setUser] = useState<User>();
-  onAuthStateChanged(auth,(user) => {
-    if(user) setUser(user);
-  });
-  return user;
-}
-
-export const storage = getStorage();
-
+// export function useUser() {
+  //   const [user,setUser] = useState<User>();
+  //   onAuthStateChanged(auth,(user) => {
+    //     if(user) setUser(user);
+    //   });
+    //   return user;
+    // }
+    
+    
