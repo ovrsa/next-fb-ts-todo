@@ -1,79 +1,79 @@
-import { createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useAuth, useUser } from "./firebase";
-import Link from "next/link";
+import React, { useState } from 'react'
+import { auth } from './firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { useRouter } from 'next/router';
+import { Link } from '@material-ui/core';
 
-type Inputs = {
-  email: string;
-  password: string;
-  confirmationPassword: string;
-}
+const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  console.log(email, password);
 
-export default function Signup() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  // 登録ボタンを押すとhandleSubmitをが発火する
+  // handleSubmitの中ではsubmitイベントのデフォルトの動作を停止している
+  // preventDefaultがない場合、登録ボタンをクリックするとリロードされる
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    const { email, password } = event.target.elements;
+    // ↓v9の場合の書き方
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+    // ↓.thenはawaitと同じ
+    .then(( userCredential) => {
+      console.log('user created');
+      console.log(userCredential);
 
-  const auth = useAuth();
-  const currentUser = useUser();
-  const [isProcessingSignup, setIsProcessingSignup] = useState(false);
-  const router = useRouter();
-  const signup = async (email: string, password: string) => {
-    try {
-      // setIsProcessingSignup(true);
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push("/");
-      // setIsProcessingSignup(false);
-    } catch (e) {
-      console.error(e);
-    }
+    })
+    // errorが出た場合はcatchの処理を実装
+    .catch((error) => {
+      alert(error.message)
+      console.error(error)
+    }); 
+    console.log(email.value);
   };
-  const onSubmit: SubmitHandler<Inputs> = ({
-    email,
-    password,
-    confirmationPassword,
-  }) => {
-    if (password === confirmationPassword) {
-      signup(email, password);
-    } else {
-      alert("パスワードが一致しません");
-    }
+  // Eメールを送信した際、setEmailの値が変更される
+  const handleChangeEmail = (event: any) => {
+    setEmail(event.currentTarget.value);
+  };
+  // パスワードを送信した際、setPasswordの値が変更される
+  const handleChangePassword = (event: any) => {
+    setPassword(event.currentTarget.value);
   };
 
   return (
-    <>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Eメール</label>
-        <input type="email" placeholder="example@test.com"
-        {...register("email",{required: true})} 
-        />
-        {errors.email && <p>Eメールは必須です</p>}
-      </div>
+    <div>
+      <h1>ユーザ登録</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>メールアドレス</label>
+          <input
+            name="email"
+            type="email"
+            placeholder="email"
+            // 値が変更された際に発火、handleChangeEmailの値が変わる
+            onChange={(event) => handleChangeEmail(event)}
+            autoFocus={true}
+          />
+        </div>
+        <div>
+          <label>パスワード</label>
+          <input
+            name="password"
+            type="password"
+            placeholder="password"
+            // 値が変更された際に発火、handleChangePasswordの値が変わる
+            onChange={(event) => handleChangePassword(event)}
+          />
+        </div>
+        <div>
+          <button>登録</button>
+        </div>
+      </form>
+        <div>
+          <Link  href="signin"><button>ユーザーログイン</button>
+          </Link>
+        </div>
+    </div>
+    );
+};
 
-      <div>
-        <label>パスワード</label>
-        <input type="password"
-        {...register("password",{required: true})} 
-        />
-        {errors.password && <p>パスワードは必須です</p>}
-      </div>
-
-      <div>
-        <label>パスワード再入力</label>
-        <input type="password" 
-        {...register("confirmationPassword",{required: true})} 
-        />
-        {errors.confirmationPassword && <p>パスワードの再入力は必須です</p>}
-
-      </div>
-      <input type="submit" value="サインアップ" />
-    </form>
-    </>
-
-  );
-}
+export default SignUp
