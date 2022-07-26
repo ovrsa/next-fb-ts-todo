@@ -2,8 +2,6 @@ import firebase from 'firebase/app';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-// import {getAuth, onAuthStateChanged, User} from 'firebase/auth';
-import {useState} from "react";
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -20,13 +18,3 @@ export const storage = getStorage();
 export const auth = getAuth();
 const db = getFirestore();
 export default db;
-
-// export function useUser() {
-  //   const [user,setUser] = useState<User>();
-  //   onAuthStateChanged(auth,(user) => {
-    //     if(user) setUser(user);
-    //   });
-    //   return user;
-    // }
-    
-    

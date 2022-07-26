@@ -1,5 +1,5 @@
 import React from 'react';
-import {auth} from './firebase';
+import {auth} from './firebase.tsxxx';
 // ↓firebase v9の際のログイン機能には必須
 import { signInWithEmailAndPassword } from 'firebase/auth'
 

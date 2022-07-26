@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { auth } from './firebase';
+import { auth } from './firebase.tsxxx';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useRouter } from 'next/router';
 import { Link } from '@material-ui/core';
