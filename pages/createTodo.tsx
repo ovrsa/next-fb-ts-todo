@@ -2,26 +2,29 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextareaAutosize } from '@material-ui/core'
-import { addDoc, collection, doc, getDocs, query, serverTimestamp, updateDoc, where } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, query, serverTimestamp, Timestamp, updateDoc, where } from 'firebase/firestore'
 import { useRecoilValue } from 'recoil'
-import Todos from '../todos'
-import db from '../firebase'
+import Todos from './todos'
+import db from './firebase'
 import { useRouter } from 'next/router'
 
 export default function AddTodoForm() {
   const router = useRouter()
   // const unCreatable = todo === ''
-  const newTask = async (inputData:string,textData:string,radioData:string,) => {
+  const newTask = async (
+    inputData:string,
+    textData:string,
+    priorityData:string,)  => {
     //Firebase ver9 compliant (modular)
     const post = addDoc(collection(db, "posts"), { 
       title:inputData,
       text:textData,
-      radio:radioData,
+      priority:priorityData,
       create: serverTimestamp(),
-      update: serverTimestamp() 
+      update: serverTimestamp()
     });
     post.then(() => {
-      router.push("./")
+      router.push("./todos")
     })
   };
 
@@ -31,11 +34,14 @@ export default function AddTodoForm() {
     const input = e.target.elements["title"].value
     const text = e.target.elements["detail"].value
     const priority = e.target.elements["priority"].value
-    // const radio = e.target.element[2].value
+    // const priority = e.target.element[2].value
     // console.log(e.target["priority"].value)
     newTask(input,text,priority)
   }
-  
+
+let random = Math.random() * 11;
+console.log( random );
+
   return (
     <>
       <Head>
@@ -69,15 +75,15 @@ export default function AddTodoForm() {
         <br />
             <p>優先度</p>
             <div>
-              <input id="high" type="radio" value="High" name="priority"/>
+              <input id="high" type="radio" value="高" name="priority"/>
               <label htmlFor="high">高</label>
             </div>
             <div>
-              <input id="middle" type="radio" value="Middle" name="priority"/>
+              <input id="middle" type="radio" value="中" name="priority"/>
               <label htmlFor="middle">中</label>
             </div>
             <div>
-              <input id="low" type="radio" value="Low" name="priority"/>
+              <input id="low" type="radio" value="低" name="priority"/>
               <label htmlFor="low">低</label>
             </div>
           
