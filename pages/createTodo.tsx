@@ -2,11 +2,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextareaAutosize } from '@material-ui/core'
-import { addDoc, collection, doc, getDocs, query, serverTimestamp, Timestamp, updateDoc, where } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, query, serverTimestamp, setDoc, Timestamp, updateDoc, where } from 'firebase/firestore'
 import { useRecoilValue } from 'recoil'
 import Todos from './todos'
 import db from './firebase'
 import { useRouter } from 'next/router'
+import { v4 as uuidv4 } from 'uuid';
 
 export default function AddTodoForm() {
   const router = useRouter()
@@ -16,7 +17,9 @@ export default function AddTodoForm() {
     textData:string,
     priorityData:string,)  => {
     //Firebase ver9 compliant (modular)
-    const post = addDoc(collection(db, "posts"), { 
+    const id = uuidv4();
+    const post = setDoc(doc(db, "posts",id), {
+      id,
       title:inputData,
       text:textData,
       priority:priorityData,
@@ -25,6 +28,7 @@ export default function AddTodoForm() {
     });
     post.then(() => {
       router.push("./todos")
+      uuidv4();
     })
   };
 

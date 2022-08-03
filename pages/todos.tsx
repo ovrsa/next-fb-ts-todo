@@ -4,24 +4,13 @@ import Head from 'next/head'
 import db from "./firebase"
 import { collection,doc,getDocs, onSnapshot, query, where, orderBy  } from 'firebase/firestore'
 import { useRecoilState } from "recoil";
-import { countState, userState } from "../components/atoms";
+import { postState } from "../components/atoms";
 import { CssBaseline } from '@material-ui/core';
 import { FirebaseError } from 'firebase/app'
 
 // firestoreの内容を取得
 function Todos({todo}:{todo:any}) {
   const [posts, setPosts] = useState<any[]>([
-    // コメントアウトしないとcreateの部分でエラーになる
-    // -----------------------------------------------
-    // {
-    //   id: '',
-    //   title: '',
-    //   status: '',
-    //   priority: '',
-    //   create: '',
-    //   update: '',
-    //   isDraft: false
-    // }
   ]);
   const q = query(
     collection(db, 'posts'),
@@ -51,6 +40,8 @@ function Todos({todo}:{todo:any}) {
     })
     return () => unSub()
   }, [])
+  // setpostの部分をrecoilに保存するように
+
 
   // useStateでステータス(状態、優先度)の保持
   const [filteringStatus, setFilteringStatus] = useState('NONE')
@@ -80,6 +71,12 @@ function Todos({todo}:{todo:any}) {
   const changePriority = (event: SelectChangeEvent,id: string) => {
     const priority = event.target.value
   }
+
+  function formatDate(dt:Date){
+    let y =dt.getFullYear();
+    let m = ('00' + (dt.getMonth()+1)).slice(-2);
+    let d = ('00' + dt.getDate()).slice(-2);
+    return (y + '-' + m + '-' + d);  }
 
   useEffect(() => {
     // データベースからデータを取得する
@@ -111,12 +108,12 @@ return(
           <div>
           {posts.map((post) => (
             <div key={post.title}>
-            <Link href={`/detail?id=${post.id}`}>
+            <Link href={`/details/${post.id}`}>
             <a>{post.title}</a>
             </Link>
 
             <p>{post.priority}</p>
-            <p>{post.create.toDate().toString()}</p>
+            <p>{formatDate(new Date(post.create.toDate().toString()))}</p>
             <select
               value={post.priority ?? ''}
               onChange={(e: SelectChangeEvent) => changeStatus(e, post.id)}
@@ -128,8 +125,8 @@ return(
 
             {/* 進捗状況 */}
             <select
-              // value={post.status ?? ''}
-              // onChange={(e: SelectChangeEvent) => changeStatus(e, post.id)}
+              value={post.status ?? ''}
+              onChange={(e: SelectChangeEvent) => changeStatus(e, post.id)}
             >
               <option value="NOT STARTED">未完了</option>
               <option value="DOING">作業中</option>
