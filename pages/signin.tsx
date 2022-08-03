@@ -1,5 +1,5 @@
 import React from 'react';
-import {auth} from './firebase.tsxxx';
+import {auth} from './firebase';
 // ↓firebase v9の際のログイン機能には必須
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
@@ -9,8 +9,6 @@ import styles from '../styles/Home.module.css'
 import { useUser, login, logout } from "../lib/auth";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
-
 
 const Login = () => {
   const handleSubmit = (event: any) => {
@@ -28,7 +26,6 @@ const Login = () => {
         alert(error.message)
       })    
   };
-
 
   return (
     <div>

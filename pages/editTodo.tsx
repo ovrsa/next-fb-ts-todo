@@ -16,7 +16,7 @@ export default function Edit({
     <>
     <Link
     href={{
-      pathname: '/todos/[id]/edit',
+      pathname: '/posts/[id]/edit',
       query: { post: 'post-1', comment: 'comment-1' },
     }}
   >
